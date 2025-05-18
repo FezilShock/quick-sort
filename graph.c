@@ -46,11 +46,10 @@ node *moveSet(set *set, int n)
 {
     int i;
     node *tmp = set->first_node;
-    for(i = 0; i < n; i++)
+    for (i = 0; i < n; i++)
         tmp = tmp->next;
     return tmp;
 }
-
 
 /**
  * Функция которая выделяет память под новую ноду и возвращает указатель на неё.
@@ -86,31 +85,30 @@ void swap(node *a, node *b)
 
 int partition(set *arr, int l, int r)
 {
-    node *pivot  = moveSet(arr, r);
+    node *pivot = moveSet(arr, r);
     int i = l - 1;
-    for(int j = l; j <= r - 1; j++)
+    for (int j = l; j <= r - 1; j++)
     {
-        if((moveSet(arr, j)->power < pivot->power) || ((moveSet(arr, j)->val < pivot->val) && (moveSet(arr, j)->power == pivot->power)))
+        if ((moveSet(arr, j)->power < pivot->power) || ((moveSet(arr, j)->val < pivot->val) && (moveSet(arr, j)->power == pivot->power)))
         {
             i++;
             swap(moveSet(arr, i), moveSet(arr, j));
         }
     }
 
-    swap(moveSet(arr, i+1), moveSet(arr, r));
+    swap(moveSet(arr, i + 1), moveSet(arr, r));
     return i + 1;
 }
 
-void quicksort (set *arr, int l, int r)
+void quicksort(set *arr, int l, int r)
 {
     if (l < r)
     {
         int q = partition(arr, l, r);
         quicksort(arr, l, q - 1);
         quicksort(arr, q + 1, r);
-    } 
+    }
 }
-
 
 /*
  * Функция для проверки существования элемента
@@ -176,12 +174,12 @@ void setOutput(set *set)
 {
     if (set->size)
     {
-            node *curNode = set->first_node;
-            while (curNode != NULL)
-            {
-                printf("%c %d\n", curNode->val, curNode->power);
-                curNode = curNode->next;
-            }
+        node *curNode = set->first_node;
+        while (curNode != NULL)
+        {
+            printf("%c %d\n", curNode->val, curNode->power);
+            curNode = curNode->next;
+        }
     }
 }
 
@@ -224,7 +222,7 @@ int readfile(FILE *fp, set *tops)
         char ch1 = fgetc(fp);
         fgetc(fp);
         char ch2 = fgetc(fp);
-        if(ch1 == ch2)
+        if (ch1 == ch2)
             setPush(tops, ch1);
         else
         {
@@ -236,7 +234,7 @@ int readfile(FILE *fp, set *tops)
     return 0;
 }
 
-//Функция получения и сортировки графа
+// Функция получения и сортировки графа
 int gettops(void)
 {
     set *tops = createSet();
@@ -252,7 +250,7 @@ int gettops(void)
     {
         if (tops->size)
         {
-            node *curNode = moveSet(tops, tops->size-1);
+            node *curNode = moveSet(tops, tops->size - 1);
             curNode->power++;
             puts("Unsorted tops:");
             setOutput(tops);
@@ -260,9 +258,9 @@ int gettops(void)
         clock_t start, end;
         double cpu_time_used;
         start = clock();
-        quicksort(tops, 0, tops->size-1);
+        quicksort(tops, 0, tops->size - 1);
         end = clock();
-        printf("Sort time = %fs\n", ((double) (end - start)) / CLOCKS_PER_SEC);
+        printf("Sort time = %fs\n", ((double)(end - start)) / CLOCKS_PER_SEC);
         if (tops->size)
         {
             node *curNode = tops->first_node;
