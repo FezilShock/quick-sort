@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+//Функция перемены местами элементов
 void swap(int *a, int *b)
 {
     int t = *a;
@@ -10,33 +11,40 @@ void swap(int *a, int *b)
     *b = t;
 }
 
+//Функиция разделения
 int partition(int *arr, int l, int r)
 {
+    //Выбираем опрорную точку
     int pivot  = arr[r];
+    //Инициализируем переменную под отсортированный элемент
     int i = l - 1;
     for(int j = l; j <= r - 1; j++)
     {
         if(arr[j] < pivot)
         {
             i++;
+            //меняем i и j-ый элементы местами
             swap(&arr[i], &arr[j]);
         }
     }
-
+    //меняем опорный элемент
     swap(&arr[i + 1], &arr[r]);
     return i + 1;
 }
-
+//функция быстрой сортировки
 void quicksort (int *arr, int l, int r)
 {
     if (l < r)
     {
+        //вычисляем опрорную точку
         int q = partition(arr, l, r);
+        //рекурсивно сортируем массив
         quicksort(arr, l, q - 1);
         quicksort(arr, q + 1, r);
     } 
 }
 
+//функия создания массива
 int *createArr(int size)
 {
     int i;
@@ -46,6 +54,7 @@ int *createArr(int size)
     return arr;
 }
 
+//фунуия измерения времени выполнения сортировки
 double gettime(int *arr, int size)
 {
     clock_t start, end;

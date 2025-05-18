@@ -171,17 +171,16 @@ void setPush(set *set, char new_var)
  * Параметр `set` - указатель на множество
  * Параметр 'FILE' - указатель на файловый поток
  */
-void setOutput(set *set, FILE *fp)
+void setOutput(set *set)
 {
     if (set->size)
     {
-        node *curNode = set->first_node;
-        while (curNode != NULL)
-        {
-            fputc(curNode->val, fp);
-            fputs(";", fp);
-            curNode = curNode->next;
-        }
+            node *curNode = set->first_node;
+            while (curNode != NULL)
+            {
+                printf("%c %d\n", curNode->val, curNode->power);
+                curNode = curNode->next;
+            }
     }
 }
 
@@ -236,7 +235,7 @@ int readfile(FILE *fp, set *tops)
     return 0;
 }
 
-//Функция создания графа
+//Функция получения и сортировки графа
 int gettops(void)
 {
     set *tops = createSet();
@@ -254,24 +253,15 @@ int gettops(void)
         {
             node *curNode = moveSet(tops, tops->size-1);
             curNode->power++;
-            curNode = tops->first_node;
             puts("Unsorted tops:");
-            while (curNode != NULL)
-            {   
-                printf("%c %d\n", curNode->val, curNode->power);
-                curNode = curNode->next;
-            }
+            setOutput(tops);
         }
         quicksort(tops, 0, tops->size-1);
         if (tops->size)
         {
             node *curNode = tops->first_node;
             puts("Sorted tops:");
-            while (curNode != NULL)
-            {
-                printf("%c %d\n", curNode->val, curNode->power);
-                curNode = curNode->next;
-            }
+            setOutput(tops);
         }
     }
     else
