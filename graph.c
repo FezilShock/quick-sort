@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 // Функция возвращающая динамическую строку
 char *dynstring(char c)
@@ -256,7 +257,12 @@ int gettops(void)
             puts("Unsorted tops:");
             setOutput(tops);
         }
+        clock_t start, end;
+        double cpu_time_used;
+        start = clock();
         quicksort(tops, 0, tops->size-1);
+        end = clock();
+        printf("Sort time = %fs\n", ((double) (end - start)) / CLOCKS_PER_SEC);
         if (tops->size)
         {
             node *curNode = tops->first_node;
